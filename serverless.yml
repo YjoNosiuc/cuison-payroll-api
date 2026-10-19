@@ -1,0 +1,29 @@
+service: cuison-payroll-api
+provider:
+  name: aws
+  region: ap-southeast-1
+  environment:
+    PAYSLIP_BUCKET: cuison-sam10-payslips
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+          Resource: arn:aws:s3:::cuison-sam10-payslips/payslips/*
+functions:
+  web:
+    handler: index.php
+    runtime: php-84-fpm
+    timeout: 28
+    memorySize: 1024
+    events:
+      - httpApi: '*'
+package:
+  patterns:
+    - '!node_modules/**'
+    - '!tests/**'
+    - '!.git/**'
+    - '!*.md'
+plugins:
+  - ./vendor/bref/bref

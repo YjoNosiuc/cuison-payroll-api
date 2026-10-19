@@ -1,0 +1,6 @@
+/vendor/
+/.serverless/
+.env
+*.pdf
+.idea/
+.vscode/
